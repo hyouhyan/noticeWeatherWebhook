@@ -1,13 +1,13 @@
 
 function getWeatherPost() {
 
-  var DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1593203573541459072/UopKs-a324t-45y6789009876543210p9o87654321qazwsx";
+  const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1593203573541459072/UopKs-a324t-45y6789009876543210p9o87654321qazwsx";
 
   const url = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
   const area = "340000"; // 広島
-  var response = UrlFetchApp.fetch(`${url}${area}.json`); 
+  let response = UrlFetchApp.fetch(`${url}${area}.json`); 
 
-  var json=JSON.parse(response.getContentText());
+  let json=JSON.parse(response.getContentText());
 
   let reportDatetime = new Date(json[0]["reportDatetime"])
 
@@ -35,11 +35,11 @@ function getWeatherPost() {
         }
   }
 
-  var data = {
+  let data = {
     "content": `広島県南部の天気 ${reportDatetime.getMonth() + 1}月${reportDatetime.getDate()}日 ${reportDatetime.getHours()}時${reportDatetime.getMinutes()}分 更新`,
     "embeds":embeds
   }
-  var options =
+  let options =
   {
     "method" : "POST",
     'contentType': 'application/json',
