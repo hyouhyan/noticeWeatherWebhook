@@ -1,21 +1,19 @@
-
 function getWeatherPost() {
-
   const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1593203573541459072/UopKs-a324t-45y6789009876543210p9o87654321qazwsx";
 
   const url = "https://www.jma.go.jp/bosai/forecast/data/forecast/";
   const area = "340000"; // 広島
-  let response = UrlFetchApp.fetch(`${url}${area}.json`); 
+  const response = UrlFetchApp.fetch(`${url}${area}.json`); 
 
-  let json=JSON.parse(response.getContentText());
+  const json=JSON.parse(response.getContentText());
 
-  let reportDatetime = new Date(json[0]["reportDatetime"])
+  const reportDatetime = new Date(json[0]["reportDatetime"])
 
-  let embeds = []
+  embeds = []
 
   for(const area of json[1].timeSeries[0].areas){
         if(area.area.name=="南部"){
-          let today = new Date()
+          today = new Date()
           for(const weatherCode of area.weatherCodes){
             imgurl = `https://www.jma.go.jp/bosai/forecast/img/${weatherCode}.png`
             imgurl = `https://weathernews.jp/onebox/img/wxicon/${weatherCode}.png`
@@ -23,7 +21,7 @@ function getWeatherPost() {
             if (today.getMonth() + 1 == "3" && (today.getDate() == 27 || today.getDate() == 28 || today.getDate() == 29))
             embeds[embeds.length] = {
               "title": `${today.getMonth() + 1}月${today.getDate()}日`,
-              "description": getIcon(allWeatherCode[weatherCode][3]) + " " + allWeatherCode[weatherCode][3],
+              "description": allWeatherCode[weatherCode][3],
               "color": 5620992,
               "thumbnail": {
                 "url": imgurl
@@ -35,11 +33,11 @@ function getWeatherPost() {
         }
   }
 
-  let data = {
+  data = {
     "content": `広島県南部の天気 ${reportDatetime.getMonth() + 1}月${reportDatetime.getDate()}日 ${reportDatetime.getHours()}時${reportDatetime.getMinutes()}分 更新`,
     "embeds":embeds
   }
-  let options =
+  options =
   {
     "method" : "POST",
     'contentType': 'application/json',
@@ -54,7 +52,7 @@ function getIcon(weather){
   state = {"一時":":left_right_arrow:", "時々":":left_right_arrow:", "のち":":arrow_right:", "後":":arrow_right:"};
   
   if(weather.length > 2){
-     return icon[weather[0]] +state[weather.slice(1,3)] +icon[weather[3]];
+    return icon[weather[0]] +state[weather.slice(1,3)] +icon[weather[3]];
   }
   else{
     return icon[weather[0]];
