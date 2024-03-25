@@ -51,7 +51,7 @@ function getWeatherPost() {
 
 function getIcon(weather){
   icon = {"晴":":sunny:", "曇":":cloud:", "雨":":cloud_rain:", "雪":":snowman2:"};
-  state = {"一時":":left_right_arrow:", "時々":":left_right_arrow:", "のち":":arrow_right:"};
+  state = {"一時":":left_right_arrow:", "時々":":left_right_arrow:", "のち":":arrow_right:", "後":":arrow_right:"};
   
   if(weather.length > 2){
      return icon[weather[0]] +state[weather.slice(1,3)] +icon[weather[3]];
